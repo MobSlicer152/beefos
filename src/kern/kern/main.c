@@ -4,16 +4,15 @@
 
 void kernel_main(void)
 {
-	tty_reset();
-	
-	tty_setcolor(3 | 0 << 4);
+	size_t i;
 
-	tty_putchar_at(' ', 3 | 3 << 4, 39, 11);
-	tty_putchar_at(' ', 3 | 3 << 4, 40, 11);
-	tty_putchar_at(' ', 3 | 3 << 4, 41, 11);
-	tty_putchar_at(' ', 3 | 3 << 4, 42, 11);
-	tty_putchar_at(' ', 3 | 3 << 4, 39, 12);
-	tty_putchar_at(' ', 3 | 3 << 4, 40, 12);
-	tty_putchar_at(' ', 3 | 3 << 4, 41, 12);
-	tty_putchar_at(' ', 3 | 3 << 4, 42, 12);
+	tty_reset();
+
+	tty_setcolor(15 | 0 << 4);
+
+	kprintf("This is a really basic OS that is crazy simple. This is an intentionally long sentence that takes up a lot of space\n\n");
+
+	for (i = 0; i < 80; i++) {
+		tty_putchar_at(' ', i / 4 + 1 | i / 4 + 1 << 4, i, i / 4 + 4);
+	}
 }
