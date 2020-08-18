@@ -27,3 +27,5 @@ cp $BUILDDIR/beefkern isosrc/boot
 printf ".\n"
 
 grub-mkrescue isosrc -o beefos.iso
+
+rm -r isosrc
