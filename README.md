@@ -15,3 +15,5 @@ make -C build
 # Use whatever emulator, I just prefer QEMU
 qemu-system-i386 -kernel build/beefkern.img
 ```
+
+Or, the `createiso.sh` script automatically builds the kernel and boot image.
