@@ -12,3 +12,5 @@ set(KLIBC_C_SRC
 
 add_library(klibc ${KLIBC_C_SRC})
 target_link_libraries(klibc gcc)
+
+add_custom_command(TARGET klibc POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:klibc> ${CMAKE_BINARY_DIR}/klibc.a)

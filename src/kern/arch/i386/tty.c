@@ -46,28 +46,27 @@ void tty_save(u16 *dst, size_t n)
 	kmemcpy((void *)dst, tty_buf, n);
 }
 
-void tty_scroll(size_t n)
+/* void tty_scroll(size_t n)
 {
 	u8 nchrs = VGA_WIDTH * n;
 	u16 *ptr = NULL;
-	u16 tmp[ARRAYSIZE(tty_buf)];
+	u16 tmp[VGA_AREA];
 
-	kmemcpy(ptr, tty_buf, ARRAYSIZE(tty_buf));
+	tty_save(tmp, VGA_AREA);
 
 	ptr = &tmp + nchrs;
 
 	tty_clear();
 	
-	if (nchrs < VGA_AREA)
-		kmemcpy(tty_buf, ptr, nchrs);
+	kmemcpy(tty_buf, ptr, nchrs);
 
-	tty_row -= n;
-}
+	tty_row = VGA_HEIGHT - n;
+} */
 
 void tty_putchar_at(uchar c, u16 color, size_t x, size_t y)
 {
 	const size_t pos = y * VGA_WIDTH + x;
-	if (c != '\n')
+	if (c > 20)
 		tty_buf[pos] = vga_entry(c, color);
 
 }
@@ -81,7 +80,7 @@ void tty_putchar(char c)
 		tty_row++;
 
 		if (++tty_row == VGA_HEIGHT) {
-			tty_scroll(1);
+			tty_clear();
 		}
 	}
 }

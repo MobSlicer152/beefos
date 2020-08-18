@@ -20,7 +20,7 @@ void tty_save(u16 *dst, size_t n);
 void tty_setcolor(u8 color);
 
 /* Scroll the buffer down n lines */
-void tty_scroll(size_t n);
+//void tty_scroll(size_t n);
 
 /* Put a character at the specified position in color */
 void tty_putchar_at(uchar c, u16 color, size_t x, size_t y);
