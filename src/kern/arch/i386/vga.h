@@ -3,6 +3,10 @@
 
 #include <beefos/types.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
 enum vga_color {
 	VGA_COLOR_BLACK,
 	VGA_COLOR_BLUE,
@@ -31,5 +35,9 @@ static inline u16 vga_entry(u8 uc, u16 color)
 {
 	return (u16)uc | (u16)color << 8;
 } 
+
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* _ARCH_I386_VGA_H */
