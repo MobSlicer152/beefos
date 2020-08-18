@@ -1,6 +1,8 @@
 #!/bin/sh
 
-if [ !-x xorriso ]; then
+source ./buildenv
+
+if [ ! -x /usr/bin/xorriso ]; then
 	printf "This script requires xorriso.\n"
 fi
 
@@ -8,11 +10,11 @@ if [ -e isosrc ]; then
 	rm -r isosrc
 fi
 
-if [ !-e $BUILDDIR ]; then
+if [ ! -e $BUILDDIR ]; then
 	cmake -S. -Bbuild
 fi
 
-if [ !-e $BUILDDIR/beefkern ]; then
+if [ ! -e $BUILDDIR/beefkern ]; then
 	cmake --build $BUILDDIR
 fi
 
