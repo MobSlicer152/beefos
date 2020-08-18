@@ -1,0 +1,2 @@
+/home/mobslicer152/beefos/tools/bin/i686-elf-ar qc libklibc.a CMakeFiles/klibc.dir/kabrt/kabort.c.o CMakeFiles/klibc.dir/kprintf/kprintf.c.o CMakeFiles/klibc.dir/kstring/kmemcmp.c.o CMakeFiles/klibc.dir/kstring/kmemcpy.c.o CMakeFiles/klibc.dir/kstring/kmemmove.c.o CMakeFiles/klibc.dir/kstring/kmemset.c.o CMakeFiles/klibc.dir/kstring/kstrlen.c.o
+/home/mobslicer152/beefos/tools/bin/i686-elf-ranlib libklibc.a

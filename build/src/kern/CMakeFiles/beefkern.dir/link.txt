@@ -1,0 +1,1 @@
+/home/mobslicer152/beefos/tools/bin/i686-elf-gcc -ffreestanding -nostdlib -Wall -Wextra -T/home/mobslicer152/beefos/src/link.ld CMakeFiles/beefkern.dir/kern/main.c.o CMakeFiles/beefkern.dir/arch/i386/boot.S.o CMakeFiles/beefkern.dir/arch/i386/crti.S.o CMakeFiles/beefkern.dir/arch/i386/crtn.S.o CMakeFiles/beefkern.dir/arch/i386/tty.c.o -o beefkern  klibc/libklibc.a -lgcc 

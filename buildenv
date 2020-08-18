@@ -1,3 +1,4 @@
 export PREFIX=$HOME/beefos/tools/
 export TARGET=i686-elf
 export PATH=$PREFIX/bin:$PATH
+export BUILDDIR=build

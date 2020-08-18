@@ -18,13 +18,14 @@ if [ ! -e $BUILDDIR/beefkern ]; then
 	cmake --build $BUILDDIR
 fi
 
-mkdir -p isosrc/boot/grub
+mkdir -p isosrc/boot/grub/themes
 
 printf "Copying kernel and GRUB config."
 cp src/grub.cfg isosrc/boot/grub
 printf "."
 cp $BUILDDIR/beefkern isosrc/boot
 printf ".\n"
+cp -r grub-theme isosrc/boot/grub/themes/Tela
 
 grub-mkrescue isosrc -o beefos.iso
 

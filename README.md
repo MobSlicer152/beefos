@@ -17,3 +17,5 @@ qemu-system-i386 -kernel build/beefkern.img
 ```
 
 Or, the `createiso.sh` script automatically builds the kernel and boot image.
+
+The font used in the GRUB theme background is [Space Mono](https://fonts.google.com/specimen/Space+Mono). The theme itself is from https://github.com/vinceliuice/grub2-themes.
