@@ -23,5 +23,7 @@ set(KERN_I386_SRC
 
 add_subdirectory(klibc)
 
-add_executable(beefkern.img ${KERN_C_SRC} ${KERN_I386_SRC})
-target_link_libraries(beefkern.img klibc gcc)
+add_executable(beefkern ${KERN_C_SRC} ${KERN_I386_SRC})
+target_link_libraries(beefkern klibc gcc)
+
+add_custom_command(TARGET beefkern POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:beefkern> ${CMAKE_BINARY_DIR}/beefkern)

@@ -48,7 +48,20 @@ void tty_save(u16 *dst, size_t n)
 
 void tty_scroll(size_t n)
 {
-	kmemset(tty_buf + sizeof(tty_buf) - VGA_WIDTH, vga_entry(' ', tty_color), VGA_WIDTH);
+	u8 nchrs = VGA_WIDTH * n;
+	u16 *ptr = NULL;
+	u16 tmp[ARRAYSIZE(tty_buf)];
+
+	kmemcpy(ptr, tty_buf, ARRAYSIZE(tty_buf));
+
+	ptr = &tmp + nchrs;
+
+	tty_clear();
+	
+	if (nchrs < VGA_AREA)
+		kmemcpy(tty_buf, ptr, nchrs);
+
+	tty_row -= n;
 }
 
 void tty_putchar_at(uchar c, u16 color, size_t x, size_t y)

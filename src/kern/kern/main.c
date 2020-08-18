@@ -18,4 +18,6 @@ void kernel_main(void)
 		if (i == 10000)
 			tty_scroll(2);
 	}
+
+	kprintf("asdf\n");
 }

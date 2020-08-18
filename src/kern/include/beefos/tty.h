@@ -4,6 +4,7 @@
 #include <stddef.h>
 
 #include <beefos/kstring.h>
+#include <beefos/macro.h>
 #include <beefos/types.h>
 
 /* Reset buffer and cursor */

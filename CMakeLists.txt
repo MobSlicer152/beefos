@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_C_COMPILER "-gcc")
-set(CMAKE_EXE_LINKER "-ld")
-set(CMAKE_ASM_COMPILER "-as")
+set(CMAKE_C_COMPILER "$ENV{TARGET}-gcc")
+set(CMAKE_EXE_LINKER "$ENV{TARGET}-ld")
+set(CMAKE_ASM_COMPILER "$ENV{TARGET}-as")
 
 set(CMAKE_C_FLAGS "-ffreestanding -nostdlib -Wall -Wextra")
 set(CMAKE_EXE_LINKER_FLAGS "-T${CMAKE_CURRENT_LIST_DIR}/src/link.ld")
