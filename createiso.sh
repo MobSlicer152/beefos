@@ -21,7 +21,7 @@ fi
 mkdir -p isosrc/boot/grub
 
 printf "Copying kernel and GRUB config."
-cp grub.cfg isosrc/boot/grub
+cp src/grub.cfg isosrc/boot/grub
 printf "."
 cp $BUILDDIR/beefkern isosrc/boot
 printf ".\n"
