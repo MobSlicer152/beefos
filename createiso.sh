@@ -8,6 +8,10 @@ if [ -e isosrc ]; then
 	rm -r isosrc
 fi
 
+if [ !-e $BUILDDIR ]; then
+	cmake -S. -Bbuild
+fi
+
 if [ !-e $BUILDDIR/beefkern ]; then
 	cmake --build $BUILDDIR
 fi
