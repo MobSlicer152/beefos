@@ -1,2 +1,2 @@
-$BUILDDIR/**
+build/**
 *.iso

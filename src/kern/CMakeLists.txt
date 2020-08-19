@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-include_directories(include)
+include_directories(include ${CMAKE_CURRENT_LIST_DIR})
 
 set(KERN_C_SRC
 	kern/main.c

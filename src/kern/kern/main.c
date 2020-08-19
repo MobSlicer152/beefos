@@ -1,6 +1,7 @@
 #include <beefos/kprintf.h>
 #include <beefos/kstring.h>
 #include <beefos/tty.h>
+#include <beefos/vga.h>
 
 void kernel_main(void)
 {
@@ -10,9 +11,9 @@ void kernel_main(void)
 
 	tty_setcolor(15 | 0 << 4);
 
-	kprintf("This is a really basic OS that is crazy simple. This is an intentionally long sentence that takes up a lot of space\n\n");
+	kprintf("This is an intentionally long sentence that takes up a lot of space so that it wraps to the next line\n\n");
 
 	for (i = 0; i < 80; i++) {
-		tty_putchar_at(' ', i / 4 + 1 | i / 4 + 1 << 4, i, i / 4 + 4);
+		tty_putchar_at(' ', vga_entry_color(i / 4, i / 4), i, i / 4 + 4);
 	}
 }
