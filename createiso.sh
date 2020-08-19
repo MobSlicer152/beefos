@@ -27,6 +27,11 @@ cp $BUILDDIR/beefkern isosrc/boot
 printf ".\n"
 cp -r grub-theme isosrc/boot/grub/themes/Tela
 
+if [ ! -e $BUILDDIR/beefkern ]; then
+	rm -r isosrc
+	exit
+fi
+
 grub-mkrescue isosrc -o build/beefos.iso
 
 rm -r isosrc
