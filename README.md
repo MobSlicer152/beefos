@@ -18,7 +18,7 @@ qemu-system-i386 build/beefos.iso
 qemu-system-i386 build/beefkern
 ```
 
-Or, the `createiso.sh` script automatically builds the kernel and boot image.
+Or, the `createiso.sh` script automatically builds the kernel and boot image (assuming they don't exist).
 
 To make a bootable USB stick, do something like this:
 ```bash
