@@ -11,7 +11,7 @@ if [ -e isosrc ]; then
 fi
 
 if [ ! -e $BUILDDIR ]; then
-	cmake -S. -Bbuild
+	cmake -S. -B$BUILDDIR
 fi
 
 if [ ! -e $BUILDDIR/beefkern ]; then
