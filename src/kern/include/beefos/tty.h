@@ -1,5 +1,5 @@
 #ifndef _BEEFOS_TTY_H
-#define _BEFFOS_TTY_H
+#define _BEEFOS_TTY_H
 
 #include <stddef.h>
 

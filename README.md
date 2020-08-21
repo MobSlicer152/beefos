@@ -2,7 +2,7 @@
 A basic operating system made purely for the sake of making an operating system. Currently features simple text printing routines and basic string manipulation.
 
 ## Build instructions
-You'll need a cross-compiler set up to compile for i686-elf, as per [this](https://wiki.osdev.org/GCC_Cross-Compiler) OSDev wiki article.
+You'll need the LLVM toolchain set up to target i686-elf.
 
 You also need to have the GRUB 2 sources set up somewhere and point the `buildenv` script to them.
 
