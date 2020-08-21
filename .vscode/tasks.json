@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Full build",
+			"type": "shell",
+			"command": "./createiso.sh --clean-first",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+		{
+			"label": "Start QEMU (ISO)",
+			"type": "shell",
+			"command": "qemu-system-i386 -S -gdb tcp::9999 -boot d -cdrom build/beefos.iso -m 512 &",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Start QEMU (kernel)",
+			"type": "shell",
+			"command": "qemu-system-i386 -S -gdb tcp::9999 -kernel build/beefkern -m 512 &",
+			"group": "test"
+		}
+	]
+}

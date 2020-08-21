@@ -34,7 +34,7 @@ _start:
 	call _init
 
 	# Enter the main kernel
-	call kernel_main
+	call _main
 
 	# Hang if the kernel returns or kabort gets called
 	cli

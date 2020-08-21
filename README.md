@@ -4,6 +4,8 @@ A basic operating system made purely for the sake of making an operating system.
 ## Build instructions
 You'll need a cross-compiler set up to compile for i686-elf, as per [this](https://wiki.osdev.org/GCC_Cross-Compiler) OSDev wiki article.
 
+You also need to have the GRUB 2 sources set up somewhere and point the `buildenv` script to them.
+
 Then it should be as simple as doing the following commands:
 ```bash
 source buildenv
@@ -18,7 +20,7 @@ qemu-system-i386 build/beefos.iso
 qemu-system-i386 build/beefkern
 ```
 
-Or, the `createiso.sh` script automatically builds the kernel and boot image (assuming they don't exist).
+Or, the `build.sh` script does a nice job of automatically building the kernel and boot ISO if they don't exist or you give it the option `--clean-first`.
 
 To make a bootable USB stick, do something like this:
 ```bash

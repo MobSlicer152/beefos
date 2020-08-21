@@ -2,6 +2,7 @@
 #define _BEEFOS_TYPES_H
 
 typedef unsigned char uchar;
+typedef unsigned int uint;
 
 typedef char i8;
 typedef short i16;

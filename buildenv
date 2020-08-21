@@ -1,5 +1,6 @@
 export PREFIX=$HOME/beefos/tools/
 export TARGET=i686-elf
-export BUILDARCH=x86
+export BUILD_ARCH=x86
 export PATH=$PREFIX/bin:$PATH
 export BUILDDIR=build
+export GRUB_DIR="/home/mobslicer152/builds/grub-2.04"

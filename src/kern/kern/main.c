@@ -1,15 +1,20 @@
 #include <beefos/kprintf.h>
 #include <beefos/kstring.h>
+#include <beefos/mmap.h>
 #include <beefos/tty.h>
+#include <beefos/types.h>
 #include <beefos/vga.h>
 
-void kernel_main(void)
+#include <grub/types.h>
+#include <multiboot.h>
+
+void _main(void)
 {
 	size_t i;
 
 	tty_reset();
 
-	tty_setcolor(15 | 0 << 4);
+	tty_setcolor(vga_entry_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_BLUE));
 
 	kprintf("This is an intentionally long sentence that takes up a lot of space so that it wraps to the next line\n\n");
 

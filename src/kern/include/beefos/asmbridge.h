@@ -1,12 +1,11 @@
+/* This header will be used once there are more unavoidable functions defined in assembly */
+
 #ifndef _BEEFOS_ASMBRIDGE_H
 #define _BEEFOS_ASMBRIDGE_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
-
-/* Panics the kernel. Defined in arch/<arch>/boot.S */
-extern void _panic(void);
 
 #ifdef __cplusplus
 }
