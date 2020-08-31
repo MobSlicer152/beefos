@@ -1,8 +1,24 @@
 # BeefOS
 A basic operating system made purely for the sake of making an operating system. Currently features simple text printing routines and basic string manipulation.
 
+Usually you can just download the kernel (beefkern) or the GRUB boot disk (beefos.iso) from the Releases page. Then you can run it in QEMU like so:
+
+``` bash
+# For just booting the kernel
+qemu-system-i386 -kernel beefkern
+
+# Or with the boot disk
+qemu-system-i386 beefos.iso
+```
+
+And it should look something like this:
+
+![QEMU will display some text and a diagonal line which iterates through the available colors][qemu]
+
+[qemu]: QEMU-test-0.0.1.png
+
 ## Build instructions
-You'll need the LLVM toolchain set up to target i686-elf.
+You'll need the LLVM toolchain set up to target i686-elf (most distributions of it have this target compiled in as far as I know).
 
 You also need to have the GRUB 2 sources set up somewhere and point the `buildenv` script to them.
 
