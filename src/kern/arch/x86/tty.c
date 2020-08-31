@@ -43,7 +43,7 @@ void tty_setcolor(u8 color)
 
 void tty_save(u16 *dst, size_t n)
 {
-	kmemcpy((void *)dst, tty_buf, n);
+	kmemcpy(dst, tty_buf, n);
 }
 
 /* void tty_scroll(size_t n)
@@ -57,7 +57,7 @@ void tty_save(u16 *dst, size_t n)
 	ptr = &tmp + nchrs;
 
 	tty_clear();
-	
+
 	kmemcpy(tty_buf, ptr, nchrs);
 
 	tty_row = VGA_HEIGHT - n;
@@ -88,7 +88,7 @@ void tty_putchar(char c)
 size_t tty_nwrite(const char *data, size_t n)
 {
 	size_t i;
-	size_t written;
+	size_t written = 0;
 
 	for (i = 0; i < n; i++) {
 		if (data[i] != -1) {
