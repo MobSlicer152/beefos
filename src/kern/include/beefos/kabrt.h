@@ -2,6 +2,7 @@
 #define _BEEFOS_KABRT_H
 
 #include <beefos/asmbridge.h>
+#include <beefos/vga.h>
 #include <beefos/kprintf.h>
 
 #ifdef __cplusplus

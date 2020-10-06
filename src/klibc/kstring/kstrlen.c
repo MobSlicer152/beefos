@@ -1,4 +1,4 @@
-#include <beefos/kstring.h>
+#include "beefos/kstring.h"
 
 size_t kstrlen(const char *str)
 {

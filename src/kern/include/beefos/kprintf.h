@@ -1,12 +1,13 @@
 #ifndef _BEEFOS_KPRINTF_H
 #define _BEEFOS_KPRINTF_H 1
 
-#include <beefos/kstring.h>
-#include <beefos/tty.h>
-
 #include <limits.h>
 #include <stdarg.h>
 #include <stddef.h>
+
+#include <beefos/kitoa.h>
+#include <beefos/kstring.h>
+#include <beefos/tty.h>
 
 #ifdef __cplusplus
 extern "C" {

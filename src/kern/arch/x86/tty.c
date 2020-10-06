@@ -46,27 +46,26 @@ void tty_save(u16 *dst, size_t n)
 	kmemcpy(dst, tty_buf, n);
 }
 
-/* void tty_scroll(size_t n)
+void tty_scroll(size_t n)
 {
-	u8 nchrs = VGA_WIDTH * n;
-	u16 *ptr = NULL;
-	u16 tmp[VGA_AREA];
+	size_t i, j;
+	u16 *tmp;
 
-	tty_save(tmp, VGA_AREA);
+	tmp = tty_buf + VGA_HEIGHT - (n * VGA_WIDTH);
 
-	ptr = &tmp + nchrs;
+	for (i = 0; i < n; i++) {
+		for (j = 0; j < VGA_WIDTH; j++)
+			tty_buf[j] = tty_buf[j + 1];
 
-	tty_clear();
-
-	kmemcpy(tty_buf, ptr, nchrs);
-
-	tty_row = VGA_HEIGHT - n;
-} */
+		for (j = 0; j < VGA_WIDTH; j++)
+			tmp[j] = vga_entry(' ', tty_color);
+	}
+}
 
 void tty_putchar_at(uchar c, u16 color, size_t x, size_t y)
 {
 	const size_t pos = y * VGA_WIDTH + x;
-	if (c > 20)
+	if (c > 0x20 && c < 0x7F) /* Ensure only visible ASCII characters are printed */
 		tty_buf[pos] = vga_entry(c, color);
 
 }
@@ -75,12 +74,16 @@ void tty_putchar(char c)
 {
 	unsigned char uc = c;
 	tty_putchar_at(uc, tty_color, tty_col, tty_row);
+
+	if (uc == '\b')
+		tty_col--;
+
 	if (++tty_col == VGA_WIDTH || uc == '\n') {
 		tty_col = 0;
 		tty_row++;
 
 		if (++tty_row == VGA_HEIGHT) {
-			tty_clear();
+			tty_scroll(1);
 		}
 	}
 }

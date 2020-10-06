@@ -33,7 +33,8 @@ _start:
 	# Call global constructors
 	call _init
 
-	# Enter the main kernel
+	# Enter the main kernel, giving it the multiboot_info struct as an argument
+	push %ebx
 	call _main
 
 	# Hang if the kernel returns or kabort gets called

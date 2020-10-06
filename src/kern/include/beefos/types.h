@@ -1,6 +1,10 @@
 #ifndef _BEEFOS_TYPES_H
 #define _BEEFOS_TYPES_H
 
+#include <stdbool.h>
+#include <stddef.h>
+#include <stdint.h>
+
 typedef unsigned char uchar;
 typedef unsigned int uint;
 

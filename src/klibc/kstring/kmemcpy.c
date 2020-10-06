@@ -1,4 +1,4 @@
-#include <beefos/kstring.h>
+#include "beefos/kstring.h"
 
 void *kmemcpy(void *restrict dst, const void *restrict src, size_t n)
 {
