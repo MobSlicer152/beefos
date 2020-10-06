@@ -10,4 +10,6 @@ set(CMAKE_ASM_FLAGS "--target=i686-elf -march=i686")
 
 project(BeefOS VERSION 0.0.1 LANGUAGES C ASM)
 
-add_subdirectory(src/)
+include_directories(include src/kern)
+
+add_subdirectory(src)

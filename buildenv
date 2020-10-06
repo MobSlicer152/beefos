@@ -1,4 +1,4 @@
 export TARGET=i686-elf
 export BUILD_ARCH=x86
 export BUILDDIR=build
-export GRUB_DIR="/home/mobslicer152/builds/grub-2.04"
+export GRUB_DIR="$(pwd)/grub-2.04"
