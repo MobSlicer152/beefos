@@ -7,13 +7,13 @@ set(KERN_C_SRC
 )
 
 set(KERN_X86_C_SRC
-	arch/x86/tty.c
+	arch/$ENV{KERN_ARCH}/tty.c
 )
 
 set(KERN_X86_ASM_SRC
-	arch/x86/boot.S
-	arch/x86/crti.S
-	arch/x86/crtn.S
+	arch/$ENV{KERN_ARCH}/boot.S
+	arch/$ENV{KERN_ARCH}/crti.S
+	arch/$ENV{KERN_ARCH}/crtn.S
 )
 
 set(KERN_X86_SRC
@@ -22,6 +22,6 @@ set(KERN_X86_SRC
 )
 
 add_executable(beefkern ${KERN_C_SRC} ${KERN_X86_SRC})
-target_link_libraries(beefkern klibc gcc)
+target_link_libraries(beefkern klibc)
 
 add_custom_command(TARGET beefkern POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:beefkern> ${CMAKE_BINARY_DIR}/beefkern)
