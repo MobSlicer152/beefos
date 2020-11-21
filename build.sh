@@ -1,8 +1,6 @@
 #!/bin/sh
 
-source ./buildenv
-
-if [ $1 == "--clean-first" ]; then
+if [ $1 ] && [ $1 == "--clean-first" ]; then
 	rm -r build
 fi
 
