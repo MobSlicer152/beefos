@@ -7,28 +7,82 @@
 
 # Multiboot header, in its own section
 .section .multiboot
-
 .align 4
 .long MAGIC
 .long FLAGS
 .long CHECKSUM
 
 # Allocate a 16 KiB stack for the main thread
-.section .bss
-
+.section .bootstrap_stack, "aw", @nobits
 .align 16
 stack_bottom:
 .skip 16384 # 16 KiB
 stack_top:
 
-# The kernel entry point
-.section .text
+# Set up pages
+.section .bss, "aw", @nobits
+	.align 4096
+boot_page_dir:
+	.skip 4096
+boot_page_tab1:
+	.skip 4096
 
+# The kernel entry point
+.section .multiboot.text
 .global _start
 .type _start, @function
 _start:
+	# So this first section maps the kernel into high memory.
+
+	# Map our pages
+	movl $(boot_page_tab1 - 0xC0000000), %edi
+	xor %esi, %esi
+	movl $1023, %ecx
+
+1:
+	# Map the kernel
+	cmpl $(_kernel_start - 0xC0000000), %esi
+	jl 2f
+	cmpl $(_kernel_end - 0xC0000000), %esi
+	jge 3f
+
+	movl %esi, %edx
+	orl $3, %edx
+	movl %edx, (%edi)
+
+2:
+	# Loop through our page entries
+	addl $4096, %esi
+	addl $4, %edi
+	loop 1b
+
+3:
+	# Map VGA memory to 0xC03FF000
+	movl $(0x000B8000 | 3), boot_page_tab1 - 0xC0000000 + 1023 * 4
+
+	# Map the page table to the virtual addresses 0x00000000 and 0xC0000000
+	movl $(boot_page_tab1 - 0xC0000003), boot_page_dir - 0xC0000000
+	movl $(boot_page_tab1 - 0xC0000003), boot_page_dir - 0xC0000000 + 768 * 4
+
+	# Put the address of the boot page directory in cr3
+	movl $(boot_page_dir - 0xC0000000), %ecx
+	movl %ecx, %cr3
+
+	# Actually enable paging now
+	movl %cr0, %ecx
+	orl $0x80010000, %ecx
+	movl %ecx, %cr0
+
+	# Now jump to the next part of the setup code
+	lea 4f, %ecx
+	jmp *%ecx
+
+.section .text
+4:
 	# Have the stack pointer point to, well, the stack
 	movl $stack_top, %esp
+
+	# Code for GDT creation will go here eventually
 
 	# Call global constructors
 	call _init
@@ -43,7 +97,7 @@ _start:
 	jmp 1b
 
 # Get the size of _start
-.size _start, . - _start
+# .size _start, . - _start
 
 .global _panic
 .type _panic, @function
