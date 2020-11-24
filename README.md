@@ -18,7 +18,7 @@ And it should look something like this:
 [qemu]: QEMU-test-0.0.1.png
 
 ## Build instructions
-You'll need the LLVM toolchain set up to target i686-elf (most distributions of it have this target compiled in as far as I know).
+You'll need a cross toolchain set up as per [this OSDev article](https://wiki.osdev.org/GCC_Cross-Compiler).
 
 You also need to have the GRUB 2 sources set up somewhere and point the `buildenv` script to them.
 
@@ -26,9 +26,8 @@ Then it should be as simple as doing the following commands:
 ```bash
 source buildenv
 
-cmake -S. -Bbuild
-
-make -C build
+mkdir build
+make
 
 # Use whatever emulator, I just prefer QEMU
 qemu-system-i386 build/beefos.iso

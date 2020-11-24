@@ -19,7 +19,12 @@ LIBS=-lgcc
 all: $(BUILD_DIR)/beefkern $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a iso
 
 help:
-	echo "---<==[ BEEFOS KERNEL TARGETS ]==>---"
+	@echo "---<==[ BEEFOS KERNEL TARGETS ]==>---"
+	@echo "all   - Build all targets"
+	@echo "clean - Delete build files"
+	@echo "iso   - Build an ISO image"
+	@echo "test  - Run the ISO image in QEMU"
+	@echo "help  - Display this help list"
 
 iso: $(BUILD_DIR)/beefkern
 	mkdir -p $(BUILD_DIR)/isosrc/boot/grub
@@ -46,3 +51,6 @@ $(BUILD_DIR)/klibc.a: $(BUILD_DIR)/beefkern-arch.a
 $(BUILD_DIR)/beefkern: $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a
 	cp src/kern/arch/$(KERN_ARCH)/vga.h include/beefos
 	$(MAKE) -C src/kern
+
+test:
+	qemu-system-i386 -cdrom $(BUILD_DIR)/beefos.iso
