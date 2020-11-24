@@ -5,7 +5,7 @@
 .set MAGIC, 0x1BADB002		# Magic number to help the bootloader find the header
 .set CHECKSUM, -(MAGIC + FLAGS)	# Checksum of above
 
-# Multiboot header, in its own section
+# Multiboot header
 .section .multiboot
 .align 4
 .long MAGIC
@@ -28,7 +28,7 @@ boot_page_tab1:
 	.skip 4096
 
 # The kernel entry point
-.section .multiboot.text
+.section .realmode_setup
 .global _start
 .type _start, @function
 _start:
@@ -88,6 +88,7 @@ _start:
 	call _init
 
 	# Enter the main kernel, giving it the multiboot_info struct as an argument
+	addl 0xC0000000, %ebx
 	push %ebx
 	call _main
 
@@ -95,9 +96,6 @@ _start:
 	cli
 1:	hlt
 	jmp 1b
-
-# Get the size of _start
-# .size _start, . - _start
 
 .global _panic
 .type _panic, @function

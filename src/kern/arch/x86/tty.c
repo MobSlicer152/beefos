@@ -49,17 +49,13 @@ void tty_save(u16 *dst, size_t n)
 void tty_scroll(size_t n)
 {
 	size_t i, j;
-	u16 *tmp;
-
-	tmp = tty_buf + VGA_HEIGHT - (n * VGA_WIDTH);
 
 	for (i = 0; i < n; i++) {
 		for (j = 0; j < VGA_WIDTH; j++)
-			tty_buf[j] = tty_buf[j + 1];
-
-		for (j = 0; j < VGA_WIDTH; j++)
-			tmp[j] = vga_entry(' ', tty_color);
+			tty_buf[j - 1] = tty_buf[j];
 	}
+
+	tty_row -= n;
 }
 
 void tty_putchar_at(uchar c, u16 color, size_t x, size_t y)

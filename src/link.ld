@@ -2,34 +2,37 @@ ENTRY (_start)
 
 SECTIONS
 {
-        . = 0x00100000;
-	/* The kernel will live at 3GB + 1MB in the virtual address space, */
-	/* which will be mapped to 1MB in the physical address space. */
-	/* Note that we page-align the sections. */
+	. = 1M;
 
-        .multiboot.data : {
-            *(.multiboot.data)
-        }
+	/* This has to be early in the file */
+	.multiboot BLOCK(4K) : ALIGN(4K) {
+            *(.multiboot)
+	}
 
-       .multiboot.text : {
-           *(.multiboot.text)
+       .realmode_setup : {
+           *(.realmode_setup)
        }
 
 	. += 0xC0000000;
+
 	/* Add a symbol that indicates the start address of the kernel. */
 	_kernel_start = .;
+
 	.text ALIGN (4K) : AT (ADDR (.text) - 0xC0000000)
 	{
 		*(.text)
 	}
+
 	.rodata ALIGN (4K) : AT (ADDR (.rodata) - 0xC0000000)
 	{
 		*(.rodata)
 	}
+
 	.data ALIGN (4K) : AT (ADDR (.data) - 0xC0000000)
 	{
 		*(.data)
 	}
+
 	.bss ALIGN (4K) : AT (ADDR (.bss) - 0xC0000000)
 	{
 		*(COMMON)
@@ -37,3 +40,6 @@ SECTIONS
 		*(.bootstrap_stack)
 	}
 
+	/* Add a symbol that indicates the end address of the kernel. */
+	_kernel_end = .;
+}
