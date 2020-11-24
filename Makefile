@@ -32,6 +32,7 @@ clean:
 	rm **/*.o
 
 $(BUILD_DIR)/beefkern:
+	cp src/kern/arch/$(KERN_ARCH)/vga.h include/beefos
 	$(MAKE) -C src/kern
 
 $(BUILD_DIR)/beefkern-arch.a:
