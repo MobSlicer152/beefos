@@ -43,7 +43,10 @@ void tty_setcolor(u8 color)
 
 void tty_save(u16 *dst, size_t n)
 {
-	kmemcpy(dst, tty_buf, n);
+	size_t i;
+
+	for (i = 0; i < n; i++)
+		dst[i] = tty_buf[i];
 }
 
 void tty_scroll(size_t n)

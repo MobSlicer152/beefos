@@ -1,7 +1,7 @@
-ARCH_OBJS=boot.S.o \
-	  crti.S.o \
-	  crtn.S.o \
-	  tty.c.o
+ARCH_OBJS=boot.o \
+	  crti.o \
+	  crtn.o \
+	  tty.o
 
 .SUFFIXES: .c .o .S
 
@@ -11,5 +11,5 @@ ARCH_OBJS=boot.S.o \
 .c.o:
 	$(CC) -T$(ROOT)/src/link.ld $(CFLAGS) -o $@ -c $<
 
-$(BUILD_DIR)/beefkern-arch.a $(ROOT)/include/beefos/vga.h: $(ARCH_OBJS)
-	$(AR) crs $(BUILD_DIR)/beefkern-arch.a $(ARCH_OBJS)
+$(BUILD_DIR)/beefkern-arch.a: $(ARCH_OBJS)
+	$(AR) crs $@ $^
