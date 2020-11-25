@@ -77,9 +77,9 @@ ssize_t kprintf(const char *restrict fmt, ...)
 		case 'd':
 			fmt++;
 
-	                n = va_arg(args, int);
-	                str = kitoa(n, 10, false);
-	                len = kstrlen(str);
+		        n = va_arg(args, int);
+		        str = kitoa(n, 10, false);
+		        len = kstrlen(str);
 			if (max < len) {
 				/* TODO: indicate the overflow that happened */
 				return -1;
@@ -94,9 +94,9 @@ ssize_t kprintf(const char *restrict fmt, ...)
 		case 'X':
 			fmt++;
 
-	                n = va_arg(args, uint);
-	                str = kitoa(n, 16, true);
-	                len = kstrlen(str);
+		        n = va_arg(args, uint);
+		        str = kitoa(n, 16, true);
+		        len = kstrlen(str);
 			if (max < len) {
 				/* TODO: indicate the overflow that happened */
 				return -1;
@@ -111,9 +111,9 @@ ssize_t kprintf(const char *restrict fmt, ...)
 		case 'x':
 			fmt++;
 
-	                n = va_arg(args, uint);
-	                str = kitoa(n, 16, false);
-	                len = kstrlen(str);
+		        n = va_arg(args, uint);
+		        str = kitoa(n, 16, false);
+		        len = kstrlen(str);
 			if (max < len) {
 				/* TODO: indicate the overflow that happened */
 				return -1;
@@ -128,9 +128,9 @@ ssize_t kprintf(const char *restrict fmt, ...)
 		case 'p':
 			fmt++;
 
-	                n = (u32)va_arg(args, void *);
-	                str = kitoa(n, 16, true);
-	                len = kstrlen(str);
+		        n = (u32)va_arg(args, void *);
+		        str = kitoa(n, 16, true);
+		        len = kstrlen(str);
 			if (max < len) {
 				/* TODO: indicate the overflow that happened */
 				return -1;

@@ -31,6 +31,7 @@ iso: $(BUILD_DIR)/beefkern
 	cp src/grub.cfg $(BUILD_DIR)/isosrc/boot/grub
 	cp $(BUILD_DIR)/beefkern $(BUILD_DIR)/isosrc/boot
 	grub-mkrescue -o $(BUILD_DIR)/beefos.iso $(BUILD_DIR)/isosrc
+	rm -rf $(BUILD_DIR)/isosrc
 
 .c.o:
 	$(CC) -T$(ROOT)/src/link.ld $(CFLAGS) -o $@ -c $<
@@ -46,10 +47,10 @@ $(BUILD_DIR)/beefkern-arch.a:
 	$(MAKE) -C src/kern/arch/$(KERN_ARCH)
 
 $(BUILD_DIR)/klibc.a: $(BUILD_DIR)/beefkern-arch.a
+	cp src/kern/arch/$(KERN_ARCH)/vga.h include/beefos
 	$(MAKE) -C src/klibc
 
 $(BUILD_DIR)/beefkern: $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a
-	cp src/kern/arch/$(KERN_ARCH)/vga.h include/beefos
 	$(MAKE) -C src/kern
 
 test:

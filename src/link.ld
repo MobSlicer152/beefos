@@ -5,13 +5,10 @@ SECTIONS
 	. = 1M;
 
 	/* This has to be early in the file */
-	.multiboot BLOCK(4K) : ALIGN(4K) {
-            *(.multiboot)
+	.text BLOCK(4K) : ALIGN(4K) {
+	        *(.multiboot)
+	        *(.realmode_setup)
 	}
-
-       .realmode_setup : {
-           *(.realmode_setup)
-       }
 
 	. += 0xC0000000;
 
