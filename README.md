@@ -50,5 +50,3 @@ Note: you have to build the kernel first.
 
 The font used in the GRUB theme background is [Space Mono](https://fonts.google.com/specimen/Space+Mono). The theme itself is from https://github.com/vinceliuice/grub2-themes.
 
-Note that this project is made by a 13-year-old and there may be fairly significant bugs/oversights.
-
