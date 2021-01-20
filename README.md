@@ -20,27 +20,19 @@ And it should look something like this:
 ## Build instructions
 You'll need a cross toolchain set up as per [this OSDev article](https://wiki.osdev.org/GCC_Cross-Compiler).
 
-You also need to have the GRUB 2 sources set up somewhere and point the `buildenv` script to them.
+If you would like the Makefile to use a different version of the GRUB sources, set the `GRUB_DIR` variable when you run `make`.
 
 Then it should be as simple as doing the following commands:
 ```bash
 source buildenv
-
+# This will fetch GRUB and build everything,
+# except currently I'm still working on the kernel
+# being recognized properly so expect an error related to chk-kern-mboot
 make
-
-# Use whatever emulator, I just prefer QEMU
-qemu-system-i386 build/beefos.iso
-# You can also boot the kernel directly in QEMU:
-qemu-system-i386 build/beefkern
+make test # Loads the ISO in QEMU
 ```
 
-To make a bootable USB stick, do something like this:
+To make a bootable USB stick, do something like this (really you just need to be root, have the variables set, and do `make usb`):
 ```bash
-sudo mount /dev/<the partition you want the boot files on> /mnt
-
-sudo grub-install --root-directory=/mnt /dev/<drive the partition belongs to> --target=i386-pc
-
-sudo cp build/beefkern /mnt/boot
+sudo source buildenv; make usb
 ```
-
-Note: you have to build the kernel first.

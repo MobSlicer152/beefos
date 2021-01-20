@@ -1,5 +1,6 @@
 export TARGET=i686-elf
+export GRUB_TGT=i386-pc
 export BUILD_ARCH=i686
 export KERN_ARCH=x86
 export BUILDDIR=build
-export GRUB_DIR=grub-2.04
+export GRUBDIR=grub
