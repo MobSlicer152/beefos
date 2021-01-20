@@ -2,3 +2,4 @@ build/**
 *.iso
 *.o
 include/beefos/vga.h
+grub**
