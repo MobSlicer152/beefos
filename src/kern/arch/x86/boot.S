@@ -28,7 +28,7 @@ boot_page_tab1:
 	.skip 4096
 
 # The kernel entry point
-.section .realmode_setup
+.section .setup.text
 .global _start
 .type _start, @function
 _start:
@@ -79,6 +79,13 @@ _start:
 
 .section .text
 4:
+	# Paging is enabled now
+
+	# Unmap the identity mapping
+	movl $0, boot_page_dir + 0
+	movl %cr3, %ecx
+	movl %ecx, %cr3
+
 	# Have the stack pointer point to, well, the stack
 	movl $stack_top, %esp
 

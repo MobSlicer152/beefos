@@ -2,13 +2,18 @@ ENTRY (_start)
 
 SECTIONS
 {
-	. = 1M;
+        . = 0x00100000;
+	/* The kernel will live at 3GB + 1MB in the virtual address space, */
+	/* which will be mapped to 1MB in the physical address space. */
+	/* Note that we page-align the sections. */
 
-	/* This has to be early in the file */
-	.text BLOCK(4K) : ALIGN(4K) {
-	        *(.multiboot)
-	        *(.realmode_setup)
-	}
+        .multiboot ALIGN(4K) : {
+            *(.multiboot)
+        }
+
+       .setup.text : {
+           *(.setup.text)
+       }
 
 	. += 0xC0000000;
 

@@ -1,5 +1,4 @@
-ARCH_OBJS=boot.o \
-	  crti.o \
+ARCH_OBJS=crti.o \
 	  crtn.o \
 	  tty.o
 

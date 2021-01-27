@@ -17,7 +17,7 @@ LIBS=-lgcc
 .PHONY: all clean help test beefiso usb grub chk-kern-mboot
 .SUFFIXES: .c .o .S
 
-all: $(BUILD_DIR) grub $(BUILD_DIR)/beefkern $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a chk-kern-mboot beefiso
+all: $(BUILD_DIR) grub $(BUILD_DIR)/beefkern $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a beefiso
 
 help:
 	@echo "---<==[ BEEFOS KERNEL TARGETS ]==>---"
@@ -52,7 +52,7 @@ usb: $(BUILD_DIR)/beefkern $(BUILD_DIR)
 	umount $(ROOT)/usb
 	rm -r $(ROOT)/usb
 
-$(ROOT)/grub.tar.xz:
+$(ROOT)/grub.tar.xz $(GRUB_DIR):
 	@echo "Finding latest GRUB source tarball..."
 	@GRUB_FTP_PATH=`curl -fsSL https://ftp.gnu.org/find.txt.gz | gzip -d | grep '^\./gnu/grub' | grep '\.tar\.xz$$' | sed 's/^\.\///' | sort -V | tail -n1`; \
 		GRUB_TARBALL=`echo $$GRUB_FTP_PATH | sed 's/^gnu\/grub\///'`; \
@@ -65,7 +65,11 @@ $(ROOT)/grub.tar.xz:
 		AR=x86_64-linux-gnu-ar AS=x86_64-linux-gnu-as CC=x86_64-linux-gnu-gcc LD=x86_64-linux-gnu-ld $(GRUB_DIR)/configure --host=x86_64-linux-gnu --target=x86_64-linux-gnu; \
 		cd $(ROOT)
 
-grub: $(ROOT)/grub.tar.xz
+grub: $(ROOT)/grub.tar.xz $(GRUB_DIR)
+
+update-grub:
+	rm -rf $(ROOT)/grub.tar.xz $(GRUB_DIR)
+	$(MAKE) grub
 
 chk-kern-mboot:
 	grub-file --is-x86-multiboot $(BUILD_DIR)/beefkern
@@ -77,7 +81,7 @@ chk-kern-mboot:
 	$(CC) -T$(ROOT)/src/link.ld $(CFLAGS) -o $@ -c $<
 
 clean:
-	rm -rf $(BUILD_DIR) $(GRUB_DIR)
+	rm -rf $(BUILD_DIR)
 	rm $(shell find src -type f | grep -i o$)
 
 $(BUILD_DIR)/beefkern-arch.a: $(BUILD_DIR)
@@ -87,7 +91,7 @@ $(BUILD_DIR)/klibc.a: $(BUILD_DIR)/beefkern-arch.a $(BUILD_DIR)
 	cp src/kern/arch/$(KERN_ARCH)/vga.h include/beefos
 	$(MAKE) -C src/klibc
 
-$(BUILD_DIR)/beefkern: $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a $(BUILD_DIR)
+$(BUILD_DIR)/beefkern: $(BUILD_DIR)/klibc.a $(BUILD_DIR)/beefkern-arch.a $(BUILD_DIR) grub
 	$(MAKE) -C src/kern
 
 test: beefiso
