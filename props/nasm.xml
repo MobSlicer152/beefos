@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ProjectSchemaDefinitions xmlns="http://schemas.microsoft.com/build/2009/properties" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+	<Rule
+	  Name="NASM"
+	  PageTemplate="tool"
+	  DisplayName="Netwide Assembler"
+	  Order="200">
+		<Rule.DataSource>
+			<DataSource
+			  Persistence="ProjectFile"
+			  ItemType="NASM" />
+		</Rule.DataSource>
+		<Rule.Categories>
+			<Category
+			  Name="General">
+				<Category.DisplayName>
+					<sys:String>General</sys:String>
+				</Category.DisplayName>
+			</Category>
+			<Category
+			  Name="Command Line"
+			  Subtype="CommandLine">
+				<Category.DisplayName>
+					<sys:String>Command Line</sys:String>
+				</Category.DisplayName>
+			</Category>
+		</Rule.Categories>
+		<StringProperty
+		  Name="Inputs"
+		  Category="Command Line"
+		  IsRequired="true">
+			<StringProperty.DataSource>
+				<DataSource
+				  Persistence="ProjectFile"
+				  ItemType="NASM"
+				  SourceType="Item" />
+			</StringProperty.DataSource>
+		</StringProperty>
+		<BoolProperty
+		  Name="GeneratePreprocessedSourceListing"
+		  Category="Listing File"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmasm/html/vclrfml.asp"
+		  DisplayName="Generate Preprocessed Source Listing"
+		  Description="Generates a preprocessed source listing to the Output Window.     (-Le)"
+		  Switch="-Le" />
+		<BoolProperty
+		  Name="ListAllAvailableInformation"
+		  Category="Listing File"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmasm/html/vclrfml.asp"
+		  DisplayName="List All Available Information"
+		  Description="Turns on listing of all available information.     (-L+)"
+		  Switch="-L+" />
+		<BoolProperty
+		  Name="GenerateDebugInformation"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcNASM/html/vclrfml.asp"
+		  DisplayName="Generate Debug Information"
+		  Description="Generates Debug Information (not compatible with -fbin).     (-g)"
+		  Switch="-g" />
+		<EnumProperty
+		  Name="DebugInformationFormat"
+		  HelpUrl=""
+		  DisplayName="Debug Information Format"
+		  Description="Specifies the format of the debug information (not compatible with -fbin).      (-F[format])" >
+			<EnumValue
+			  Name="none"
+			  DisplayName="None"
+			  Switch="" />
+			<EnumValue
+			  Name="dwarf"
+			  DisplayName="DWARF"
+			  Switch="-Fdwarf" />
+			<EnumValue
+			  Name="cv8"
+			  DisplayName="Codeview 8+"
+			  Switch="-Fcv8" />
+		</EnumProperty>
+
+		<StringProperty
+		  Name="OutputFileName"
+		  Category="Output File"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcNASM/html/vclrfml.asp"
+		  DisplayName="Output File Name"
+		  Description="Specifies the name of the output file.     (-o[file])"
+		  Switch="-o&quot;[value]&quot;" />
+		<EnumProperty
+		  Name="OutputFormat"
+		  Category="Output File"
+		  HelpUrl=""
+		  DisplayName="Output Format"
+		  Description="Specifies the format of the output file.      (-f[format])" >
+			<EnumValue
+			  Name="bin"
+			  DisplayName="Flat raw binary (MS-DOS, embedded, ...)"
+			  Switch="-fbin" />
+			<EnumValue
+			  Name="elf32"
+			  DisplayName="ELF32 (i386) (Linux, most Unix variants)"
+			  Switch="-felf32" />
+			<EnumValue
+			  Name="elf64"
+			  DisplayName="ELF64 (x86-64) (Linux, most Unix variants)"
+			  Switch="-felf64" />
+			<EnumValue
+			  Name="win32"
+			  DisplayName="Microsoft extended COFF for Win32 (i386)"
+			  Switch="-fwin32" />
+			<EnumValue
+			  Name="win64"
+			  DisplayName="Microsoft extended COFF for Win64 (x86-64)"
+			  Switch="-fwin64" />
+		</EnumProperty>
+		<StringListProperty
+		  Name="PreprocessorDefinitions"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcNASM/html/vclrfml.asp"
+		  DisplayName="Preprocessor Definitions"
+		  Description="Defines a text macro with the given name.     (-D[symbol])"
+		  Switch="-D&quot;[value]&quot;" />
+		<StringProperty
+		  Name="AssembledCodeListingFile"
+		  Category="Listing File"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcmasm/html/vclrfml.asp"
+		  DisplayName="Assembled Code Listing File"
+		  Description="Generates an assembled code listing file.     (-l[file])"
+		  Switch="-l&quot;[value]&quot;" />
+		<StringListProperty
+		  Name="IncludePaths"
+		  HelpUrl="https://msdn.microsoft.com/library/default.asp?url=/library/en-us/vcNASM/html/vclrfml.asp"
+		  DisplayName="Include Paths"
+		  Description="Sets path for include file.     (-I[path])"
+		  Switch="-I&quot;[value]&quot;" />
+		<StringProperty
+		  Name="CommandLineTemplate"
+		  DisplayName="Command Line"
+		  Visible="False"
+		  IncludeInCommandLine="False" />
+		<DynamicEnumProperty
+		 Name="NASMBeforeTargets"
+		 Category="General"
+		 EnumProvider="Targets"
+		 IncludeInCommandLine="False">
+			<DynamicEnumProperty.DisplayName>
+				<sys:String>Execute Before</sys:String>
+			</DynamicEnumProperty.DisplayName>
+			<DynamicEnumProperty.Description>
+				<sys:String>Specifies the targets for the build customization to run before.</sys:String>
+			</DynamicEnumProperty.Description>
+			<DynamicEnumProperty.ProviderSettings>
+				<NameValuePair
+				  Name="Exclude"
+				  Value="^NASMBeforeTargets|^Compute" />
+			</DynamicEnumProperty.ProviderSettings>
+			<DynamicEnumProperty.DataSource>
+				<DataSource
+				  Persistence="ProjectFile"
+				  ItemType=""
+				  HasConfigurationCondition="true" />
+			</DynamicEnumProperty.DataSource>
+		</DynamicEnumProperty>
+		<DynamicEnumProperty
+		  Name="NASMAfterTargets"
+		  Category="General"
+		  EnumProvider="Targets"
+		  IncludeInCommandLine="False">
+			<DynamicEnumProperty.DisplayName>
+				<sys:String>Execute After</sys:String>
+			</DynamicEnumProperty.DisplayName>
+			<DynamicEnumProperty.Description>
+				<sys:String>Specifies the targets for the build customization to run after.</sys:String>
+			</DynamicEnumProperty.Description>
+			<DynamicEnumProperty.ProviderSettings>
+				<NameValuePair
+				  Name="Exclude"
+				  Value="^NASMAfterTargets|^Compute" />
+			</DynamicEnumProperty.ProviderSettings>
+			<DynamicEnumProperty.DataSource>
+				<DataSource
+				  Persistence="ProjectFile"
+				  ItemType=""
+				  HasConfigurationCondition="true" />
+			</DynamicEnumProperty.DataSource>
+		</DynamicEnumProperty>
+		<StringProperty
+		  Name="ExecutionDescription"
+		  DisplayName="Execution Description"
+		  IncludeInCommandLine="False"
+		  Visible="False" />
+		<StringListProperty
+		  Name="AdditionalDependencies"
+		  DisplayName="Additional Dependencies"
+		  IncludeInCommandLine="False"
+		  Visible="False" />
+		<StringProperty
+		  Subtype="AdditionalOptions"
+		  Name="AdditionalOptions"
+		  Category="Command Line">
+			<StringProperty.DisplayName>
+				<sys:String>Additional Options</sys:String>
+			</StringProperty.DisplayName>
+			<StringProperty.Description>
+				<sys:String>Additional Options</sys:String>
+			</StringProperty.Description>
+		</StringProperty>
+	</Rule>
+	<ItemType
+	  Name="NASM"
+	  DisplayName="Netwide Assembler" />
+	<FileExtension
+	  Name="*.asm"
+	  ContentType="NASM" />
+	<ContentType
+	  Name="NASM"
+	  DisplayName="Netwide Assembler"
+	  ItemType="NASM" />
+</ProjectSchemaDefinitions>

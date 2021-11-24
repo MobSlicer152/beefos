@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{771F7BD8-D4F4-42BB-A312-B0497091C56A}"
+	ProjectSection(SolutionItems) = preProject
+		templates\default.vcxproj = templates\default.vcxproj
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "boot", "boot\boot.vcxproj", "{18092C65-AF35-4A14-A5B8-5A52253A8008}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{D96F82AC-7883-4DC6-817F-0B8A1AE4ADD7}"
+	ProjectSection(SolutionItems) = preProject
+		tools\mkbootimg.bat = tools\mkbootimg.bat
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{D6038CC5-A3D4-4B0D-96EC-8B4E7F485815}"
+	ProjectSection(SolutionItems) = preProject
+		props\nasm.props = props\nasm.props
+		props\nasm.targets = props\nasm.targets
+		props\nasm.xml = props\nasm.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{18092C65-AF35-4A14-A5B8-5A52253A8008}.Debug|x86.ActiveCfg = Debug|Win32
+		{18092C65-AF35-4A14-A5B8-5A52253A8008}.Debug|x86.Build.0 = Debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B0F8DA9B-C693-4D78-8AED-5594D17904BD}
+	EndGlobalSection
+EndGlobal
