@@ -2,22 +2,34 @@ export
 
 ARCH := $(shell uname -m | sed s/i[3456789]86/ia32/)
 
-EFI_CRT0 := /usr/lib/crt0-efi-$(ARCH).o
-EFI_LDSCRIPT := /usr/lib/elf_$(ARCH)_efi.lds
+ROOT = $(shell pwd)
+BIN_DIR = $(ROOT)/bin
 
-CFLAGS := -fno-stack-protector -fPIC -fshort-wchar \
-	  -mno-red-zone -Wall -Wextra
-LDFLAGS := -nostdlib -znocombreloc -T $(EFI_LDSCRIPT) \
-	   -shared -Bsymbolic $(EFI_CRT0)
+CC := clang
+LD := $(CC)
 
-.PHONY: help list targets
+.PHONY: help list targets clean
+
+all: $(BIN_DIR) $(BIN_DIR)/boot.efi
+
+$(BIN_DIR)/boot.efi: $(BIN_DIR) $(OBJ_DIR)
+	$(MAKE) -C boot all
+
+$(BIN_DIR):
+	mkdir -p $@
+
+clean:
+	rm -rf $(BIN_DIR)
+	rm -f $(shell find -type f -iregex '.*\.o')
 
 help:
 	@printf  "<---[ BEEFOS MAKEFILE INFORMATION ]--->\n \
 	\n \
 	Targets:\n \
 	\n \
-	\tboot.efi\t- Build the bootloader\n \
+	\tall\t\t- Build everything\n \
+	\t$(BIN_DIR)/boot.efi\t- Build the bootloader\n \
+	\tclean\t\t- Clean built files\n \
 	\n \
 	Flags:\n \
 	\n \
