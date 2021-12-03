@@ -15,6 +15,8 @@ all: $(BIN_DIR) $(BIN_DIR)/boot.efi
 $(BIN_DIR)/boot.efi: $(BIN_DIR) $(OBJ_DIR)
 	$(MAKE) -C boot all
 
+$(BIN_DIR)/boot.img: $(BIN_DIR)/boot.efi
+
 $(BIN_DIR):
 	mkdir -p $@
 
@@ -28,16 +30,9 @@ help:
 	Targets:\n \
 	\n \
 	\tall\t\t- Build everything\n \
+	\t$(BIN_DIR)/boot.img\t\t- Create a bootable image (requires mtools)\n \
 	\t$(BIN_DIR)/boot.efi\t- Build the bootloader\n \
-	\tclean\t\t- Clean built files\n \
-	\n \
-	Flags:\n \
-	\n \
-	\tARCH\t\t= $(ARCH)\n \
-	\tEFI_CRT0\t= $(EFI_CRT0)\n \
-	\tEFI_LDSCRIPT\t= $(EFI_LDSCRIPT)\n \
-	\tCFLAGS\t\t= $(CFLAGS)\n \
-	\tLDFLAGS\t\t= $(LDFLAGS)\n"
+	\tclean\t\t- Clean built files\n"
 
 list: help
 targets: help

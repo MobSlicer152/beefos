@@ -1,0 +1,46 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-target",
+      "x86_64-unknown-windows",
+      "-ffreestanding",
+      "-fshort-wchar",
+      "-mno-red-zone",
+      "-Wall",
+      "-Wextra",
+      "-I/usr/include",
+      "-I/stuff/beefos/deps/stb",
+      "-I/stuff/beefos/boot/include",
+      "-c",
+      "-o",
+      "src/main.o",
+      "src/main.c"
+    ],
+    "directory": "/stuff/beefos/boot",
+    "file": "/stuff/beefos/boot/src/main.c",
+    "output": "/stuff/beefos/boot/src/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-target",
+      "x86_64-unknown-windows",
+      "-ffreestanding",
+      "-fshort-wchar",
+      "-mno-red-zone",
+      "-Wall",
+      "-Wextra",
+      "-I/usr/include",
+      "-I/stuff/beefos/deps/stb",
+      "-I/stuff/beefos/boot/include",
+      "-c",
+      "-o",
+      "/stuff/beefos/deps/gnuefi/data.o",
+      "/stuff/beefos/deps/gnuefi/data.c"
+    ],
+    "directory": "/stuff/beefos/boot",
+    "file": "/stuff/beefos/deps/gnuefi/data.c",
+    "output": "/stuff/beefos/deps/gnuefi/data.o"
+  }
+]

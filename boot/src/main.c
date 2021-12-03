@@ -1,12 +1,14 @@
 #include <efi.h>
 #include <efilib.h>
 
-EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_table)
+EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
+			   EFI_SYSTEM_TABLE *system_table)
 {
 	ST = system_table;
+	BS = ST->BootServices;
 
-	uefi_call_wrapper(ST->ConOut->OutputString, 2, ST->ConOut, L"Hello, World!\n");
+	Print(L"System information:\nFirmware vendor: %ls\nFirmware revision: %d\n",
+	      ST->FirmwareVendor, ST->FirmwareRevision);
 
 	return EFI_SUCCESS;
 }
-

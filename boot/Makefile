@@ -1,5 +1,7 @@
 include $(ROOT)/efi.mak
 
+EFI_CFLAGS += -I$(shell pwd)/include
+
 BOOT_SRCS = $(addprefix src/, main.c)
 BOOT_OBJS = $(BOOT_SRCS:%.c=%.o)
 
