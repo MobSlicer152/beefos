@@ -1,8 +1,10 @@
 include $(ROOT)/efi.mak
 
-EFI_CFLAGS += -I$(shell pwd)/include
+HERE = $(shell pwd)
 
-BOOT_SRCS = $(addprefix src/, main.c)
+EFI_CFLAGS += -I$(HERE)/include
+
+BOOT_SRCS = $(addprefix $(HERE)/src/, main.c util.c)
 BOOT_OBJS = $(BOOT_SRCS:%.c=%.o)
 
 all: $(BOOT_OBJS) $(BIN_DIR)/boot.efi
