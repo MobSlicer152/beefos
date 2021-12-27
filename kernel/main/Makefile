@@ -5,7 +5,8 @@ HERE = $(shell pwd)
 KERNEL_CFLAGS += -I$(HERE)/include
 KERNEL_LDFLAGS += -Wl,-subsystem:native \
 		  -Wl,-entry:kernel_main \
-		  -Wl,-base:0xC0000000
+		  -Wl,-base:0xB0000000 \
+		  -Wl,-pdb:$(BIN_DIR)/kernel.pdb
 
 KERNEL_MAIN_SRCS = $(addprefix $(HERE)/src/, main.c)
 KERNEL_MAIN_OBJS = $(KERNEL_MAIN_SRCS:%.c=%.o)

@@ -1,5 +1,6 @@
-**/.vs/**
+**/*cache*/**
 
 **/bin/**
-**/bin-int/**
+**/*.o
 
+compile_commands.json

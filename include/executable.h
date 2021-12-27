@@ -122,7 +122,7 @@ struct pe_optional_header {
 	uint16_t major_subsys_version; // Major subsystem version
 	uint16_t minor_subsys_version; // Minor subsystem version
 	uint32_t reserved; // Reserved
-	uint32_t image_size; // Size of the executable and its headers. Must be a multiple of section_align.
+	uint32_t image_size; // How much space the executable needs to function when loaded into memory
 	uint32_t headers_size; // Size of some of the executable's headers. Check the docs for IMAGE_OPTIONAL_HEADER for more.
 	uint32_t checksum; // Checksum of the executable. Should probably be implemented at some point.
 	uint16_t subsystem; // Subsystem of the image
@@ -168,7 +168,7 @@ enum pe_section_flags {
 // PE section header
 struct pe_section_header {
 	uint8_t name[8]; // Section name
-	uint32_t size; // Size of the section
+	uint32_t size; // Size of the section when it's loaded
 	uint32_t rva; // RVA of the section
 	uint32_t raw_size; // Size of the raw data in the section
 	uint32_t raw_data; // RVA of the raw data in the section

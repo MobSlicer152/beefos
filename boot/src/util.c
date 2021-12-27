@@ -11,7 +11,7 @@ void print_pe_header(struct pe_header *hdr)
 	Print(L"PE header:\n    Magic: 0x%x %s\n    File header:\n        Architecture: 0x%x %s\n"
 	      L"        Number of sections: %d\n        Timestamp: %d\n"
 	      L"        Symbol table RVA: 0x%x\n        Number of symbols: %d\n"
-	      L"        Optional header size: %d bytes\n        Characteristics: 0x%x",
+	      L"        Optional header size: %d byte(s)\n        Characteristics: 0x%x",
 	      hdr->magic,
 	      hdr->magic == PE_HEADER_MAGIC ? L"(matches)" :
 						    L"(does not match)",
@@ -26,10 +26,10 @@ void print_pe_header(struct pe_header *hdr)
 
 	// Print the optional header if it's present
 	if (hdr->file_hdr.optional_header_size > 0) {
-		Print(L"\n    Optional header (%d bytes):\n        Magic: 0x%x %s\n"
-		      L"        Linker version: %d.%d\n        Text section size: %d bytes\n"
-		      L"        Read-only data section size: %d bytes\n"
-		      L"        Data section size: %d bytes\n        Entry point RVA: 0x%x\n"
+		Print(L"\n    Optional header (%d byte(s)):\n        Magic: 0x%x %s\n"
+		      L"        Linker version: %d.%d\n        Text section size: %d byte(s)\n"
+		      L"        Read-only data section size: %d byte(s)\n"
+		      L"        Data section size: %d byte(s)\n        Entry point RVA: 0x%x\n"
 		      L"        Text section RVA: 0x%x\n"
 #ifdef __i386__
 		      L"        Data section RVA: 0x%x\n        Preferred base address: 0x%x\n"
@@ -39,16 +39,16 @@ void print_pe_header(struct pe_header *hdr)
 		      L"        Section alignment: 0x%x\n        File alignment: 0x%x\n"
 		      L"        Minimum Windows version: %d.%d\n        Image version: %d.%d\n"
 		      L"        Minimum subsystem version: %d.%d\n        Image size: %d\n"
-		      L"        Size of headers: %d bytes\n        Checksum: %d\n        Subsystem: %d\n"
+		      L"        Size of headers: %d byte(s)\n        Checksum: %d\n        Subsystem: %d\n"
 		      L"        Characteristics: 0x%x\n"
 #ifdef __i386__
-		      L"        Maximum stack size: %d bytes\n        Initial stack size: %d\n"
+		      L"        Maximum stack size: %d byte(s)\n        Initial stack size: %d\n"
 		      L"        Maximum heap size: %d\n        Initial heap size: %d\n"
 #else
-		      L"        Maximum stack size: %ld bytes\n        Initial stack size: %ld\n"
-		      L"        Maximum heap size: %ld\n        Initial heap size: %ld\n"
+		      L"        Maximum stack size: %ld byte(s)\n        Initial stack size: %ld byte(s)\n"
+		      L"        Maximum heap size: %ld byte(s)\n        Initial heap size: %ld byte(s)\n"
 #endif
-		      L"    Number of entries in the data directory: %d",
+		      L"        Number of entries in the data directory: %d",
 		      hdr->file_hdr.optional_header_size,
 		      hdr->optional_hdr.magic,
 		      hdr->optional_hdr.magic == PE_OPTIONAL_HEADER_MAGIC ?
@@ -86,7 +86,14 @@ void print_pe_header(struct pe_header *hdr)
 
 void print_pe_section(struct pe_section_header *hdr)
 {
-	Print(L"");
+	Print(L"Section\n    Name: %a\n    Size: %d byte(s)\n"
+	      L"    RVA: 0x%x\n    Raw size: %d byte(s)\n"
+	      L"    Raw data RVA: 0x%x\n    Relocations RVA: 0x%x\n"
+	      L"    Line number RVA: 0x%x\n    Number of relocations: %d\n"
+	      L"    Number of line numbers: %d\n    Flags: 0x%x\n",
+	      hdr->name, hdr->size, hdr->rva, hdr->raw_size, hdr->raw_data,
+	      hdr->relocs, hdr->line_numbers, hdr->n_relocs,
+	      hdr->n_line_numbers, hdr->flags);
 }
 
 void print_system_table(EFI_SYSTEM_TABLE *st)
