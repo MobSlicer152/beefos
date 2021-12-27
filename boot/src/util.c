@@ -105,13 +105,32 @@ void print_system_table(EFI_SYSTEM_TABLE *st)
 	      st->FirmwareRevision & 0xFFFF);
 }
 
+void *handle_protocol(EFI_GUID protocol_guid, EFI_HANDLE handle)
+{
+	EFI_STATUS status;
+	EFI_HANDLE ret = NULL;
+
+	// Try to locate the protocol
+	status = BS->HandleProtocol(handle, &protocol_guid, &ret);
+	if (EFI_ERROR(status)) {
+		Print(L"Error: failed to handle protocol with GUID %g: %r\n",
+		      protocol_guid, status);
+		return NULL;
+	}
+
+	// Return
+	Print(L"Found protocol with GUID %g at 0x0x%x\n", protocol_guid,
+	      ret);
+	return ret;
+}
+
 void *locate_protocol(EFI_GUID protocol_guid, EFI_HANDLE handle)
 {
 	EFI_STATUS status;
-	EFI_HANDLE interface = NULL;
+	EFI_HANDLE ret = NULL;
 
 	// Try to locate the protocol
-	status = BS->HandleProtocol(handle, &protocol_guid, &interface);
+	status = BS->LocateProtocol(&protocol_guid, handle, &ret);
 	if (EFI_ERROR(status)) {
 		Print(L"Error: failed to locate protocol with GUID %g: %r\n",
 		      protocol_guid, status);
@@ -120,6 +139,6 @@ void *locate_protocol(EFI_GUID protocol_guid, EFI_HANDLE handle)
 
 	// Return
 	Print(L"Found protocol with GUID %g at 0x0x%x\n", protocol_guid,
-	      interface);
-	return interface;
+	      ret);
+	return ret;
 }

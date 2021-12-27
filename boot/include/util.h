@@ -24,5 +24,8 @@ extern void print_system_table(EFI_SYSTEM_TABLE *st);
 // Convert a time_t value to an EFI_TIME structure
 extern EFI_TIME epoch_to_efi_time(uint64_t t);
 
+// Handle a protocol
+extern void *handle_protocol(EFI_GUID protocol_guid, EFI_HANDLE handle);
+
 // Locate a protocol
 extern void *locate_protocol(EFI_GUID protocol_guid, EFI_HANDLE handle);

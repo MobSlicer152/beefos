@@ -21,6 +21,10 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
 	struct pe_section_header *sections; // Kernel's sections
 	uint8_t *section_data; // Raw data of the current section
 	size_t i; // Counter
+	EFI_GRAPHICS_OUTPUT_PROTOCOL *gop; // Graphics output protocol
+	EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *gop_info; // Graphics info
+	size_t gop_info_size; // Size of the graphics info
+	size_t native_mode; // Native video mode
 	EFI_MEMORY_DESCRIPTOR *map = NULL; // Memory map
 	size_t map_size = 0; // Size of the memory map
 	size_t map_key; // Key for the current memory map (no clue what it's for other than ExitBootServices)
@@ -44,7 +48,7 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
 	BS->SetWatchdogTimer(0, 0, 0, NULL);
 
 	// Get the handle to the loaded image
-	loaded_img = locate_protocol(LoadedImageProtocol, image_handle);
+	loaded_img = handle_protocol(LoadedImageProtocol, image_handle);
 	if (!loaded_img) {
 		Print(L"Error: failed to get the loaded image handle\n");
 		return 1;
@@ -52,8 +56,8 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
 
 	// Get the handle to the current device
 	boot_vol =
-		locate_protocol(FileSystemProtocol, loaded_img->DeviceHandle);
-	if (!loaded_img) {
+		handle_protocol(FileSystemProtocol, loaded_img->DeviceHandle);
+	if (!boot_vol) {
 		Print(L"Error: failed to get the simple filesystem protocol for the boot volume\n");
 		return 1;
 	}
@@ -112,7 +116,10 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
 
 	// Load the kernel's sections
 	Print(L"Loading kernel sections...\n");
-	kernel->SetPosition(kernel, pe_hdr.optional_hdr.headers_size); // The sections start here and can be read continuously without seeking
+	kernel->SetPosition(
+		kernel,
+		pe_hdr.optional_hdr
+			.headers_size); // The sections start here and can be read continuously without seeking
 	for (i = 0; i < pe_hdr.file_hdr.n_sections; i++) {
 		// Print the section
 		print_pe_section(sections + i);
@@ -166,6 +173,42 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
 		      EFI_SIZE_TO_PAGES(size), size, status);
 	}
 
+	// Locate the graphics output protocol
+	gop = locate_protocol(GraphicsOutputProtocol, NULL);
+	if (!gop) {
+		Print(L"Error: failed to locate the graphics output protocol, unable to set mode\n");
+		return 1;
+	}
+
+	// Get the native mode
+	status = gop->QueryMode(gop, gop->Mode ? gop->Mode->Mode : 0,
+				&gop_info_size, &gop_info);
+	if (status == EFI_NOT_STARTED)
+		status = gop->SetMode(gop, 0);
+	if (status != EFI_SUCCESS) {
+		Print(L"Error: failed to get the native video mode: %r\n",
+		      status);
+		return status;
+	}
+	native_mode = gop->Mode->Mode;
+
+	// Set the mode
+	Print(L"Setting the video mode to mode %d in 3 seconds...\n", native_mode);
+	BS->Stall(3000000);
+	status = gop->SetMode(gop, native_mode);
+	if (status != EFI_SUCCESS) {
+		Print(L"Error: failed to set the video mode to mode %d: %r\n",
+		      native_mode, status);
+		return status;
+	}
+
+	// Get the framebuffer
+	Print(L"Framebuffer is at 0x%lX and is %ld byte(s), %dx%d pixels (%d per line)\n",
+	      gop->Mode->FrameBufferBase, gop->Mode->FrameBufferSize,
+	      gop->Mode->Info->HorizontalResolution,
+	      gop->Mode->Info->VerticalResolution,
+	      gop->Mode->Info->PixelsPerScanLine);
+
 	// Get the memory map
 	Print(L"Getting memory map...\n");
 	BS->GetMemoryMap(&map_size, map, &map_key, &descriptor_size,
@@ -184,11 +227,18 @@ EFI_STATUS EFIAPI efi_main(EFI_HANDLE image_handle,
 	kernel_data->memory_map = map;
 	kernel_data->memory_map_size = map_size;
 	kernel_data->memory_map_ent_size = descriptor_size;
+	kernel_data->framebuffer = (uint32_t *)gop->Mode->FrameBufferBase;
+	kernel_data->framebuffer_size = gop->Mode->FrameBufferSize;
+	kernel_data->framebuffer_width = gop->Mode->Info->HorizontalResolution;
+	kernel_data->framebuffer_height = gop->Mode->Info->VerticalResolution;
+	kernel_data->framebuffer_scanline_pixels = gop->Mode->Info->PixelsPerScanLine;
+	kernel_data->framebuffer_bgr = (gop->Mode->Info->PixelFormat == PixelBlueGreenRedReserved8BitPerColor);
 
 	// Exit boot services and jump into the kernel
 	Print(L"Entering kernel in 5 seconds...\n");
 	BS->Stall(5000000);
-	Print(L"Jumping to kernel entry point at 0x%lX\n", (void *)(pe_hdr.optional_hdr.base + pe_hdr.optional_hdr.entry));
+	Print(L"Jumping to kernel entry point at 0x%lX\n",
+	      (void *)(pe_hdr.optional_hdr.base + pe_hdr.optional_hdr.entry));
 	BS->ExitBootServices(image_handle, map_key);
 	enter_kernel(
 		(void *)(pe_hdr.optional_hdr.base + pe_hdr.optional_hdr.entry),
