@@ -8,6 +8,7 @@ BIN_DIR = $(ROOT)/bin
 CC := clang
 LD := $(CC)
 AS := nasm
+AR := lld-link -lib
 
 GLOBAL_INCLUDES := $(addprefix -I, $(ROOT)/include)
 
@@ -56,7 +57,9 @@ help:
 	\n \
 	Kernel targets:\n \
 	\n \
-	    $(BIN_DIR)/kernel.sys\t- Build the kernel binary\n"
+	    $(BIN_DIR)/kernel.sys\t\t- Build the kernel binary\n \
+	    $(BIN_DIR)/kernel_graphics.lib\t- Build the kernel graphics library\n \
+	    $(BIN_DIR)/kernel_util.lib\t\t- Build the kernel utility library\n"
 
 list: help
 targets: help

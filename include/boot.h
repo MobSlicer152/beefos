@@ -6,8 +6,6 @@
 
 #include <efi.h>
 
-#include "graphics.h"
-
 // Data given to the kernel when it's started
 struct kernel_boot_data {
 	EFI_RUNTIME_SERVICES *efi_rt; // EFI runtime services
@@ -15,7 +13,7 @@ struct kernel_boot_data {
 	size_t memory_map_size; // Total size of the memory map
 	size_t memory_map_ent_size; // Size of one memory map entry
 	void *rsdp; // ACPI Root System Descriptor pointer
-	pixel_t *framebuffer; // Framebuffer address
+	uint32_t *framebuffer; // Framebuffer address
 	size_t framebuffer_size; // Size of the framebuffer in memory
 	size_t framebuffer_width; // Width in pixels of the framebuffer
 	size_t framebuffer_height; // Height in pixels of the framebuffer

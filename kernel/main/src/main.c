@@ -3,21 +3,19 @@
 #include <stdint.h>
 
 #include "boot.h"
-
-void plot_pixel(struct kernel_boot_data *data, int x, int y, pixel_t pixel)
-{
-	data->framebuffer[data->framebuffer_scanline_pixels * y + x] = pixel;
-}
+#include "graphics.h"
 
 void kernel_main(struct kernel_boot_data *data)
 {
-	size_t x;
-	size_t y;
+	// Clear the screen
+	clear_screen(data);
 
-	for (x = 50; x < 100; x++) {
-		for (y = 50; y < 100; y++)
-			plot_pixel(data, x, y, 0x008800FF);
-	}
+	// Draw a square
+	fill_rect(data,
+		  &(struct point){ 0xFF008800, data->framebuffer_width / 2 - 50,
+				   data->framebuffer_height / 2 - 50 },
+		  &(struct point){ 0, data->framebuffer_width / 2 + 50,
+				   data->framebuffer_height / 2 + 50 });
 
 	while (true)
 		;
