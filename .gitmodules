@@ -1,1 +1,4 @@
 
+[submodule "deps/fattools"]
+	path = deps/fattools
+	url = https://github.com/maxpat78/FATtools
