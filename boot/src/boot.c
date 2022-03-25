@@ -3,8 +3,12 @@
 
 #include "executable.h"
 
-void uefi_main(void)
+EFI_STATUS uefi_main(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *system_table)
 {
-	ST->ConOut->OutputString(ST->ConOut, L"Loading BeefOS...\n");
-	while (1);
+	ST = system_table;
+	BS = ST->BootServices;
+	RT = ST->RuntimeServices;
+
+	while (1)
+		ST->ConOut->OutputString(ST->ConOut, L"Loading BeefOS...\n");
 }

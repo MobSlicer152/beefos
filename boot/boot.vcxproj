@@ -75,6 +75,10 @@ Bootloader
       <NoLogo>true</NoLogo>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </MASM>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

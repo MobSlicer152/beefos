@@ -11,7 +11,7 @@ if not "%ERRORLEVEL%" == "0" (
 )
 
 echo Creating boot disk...
-python %~dp0mkbootdisk.py
+oscdimg
 if not "%ERRORLEVEL%" == "0" (
 	goto err
 )
